@@ -12,7 +12,7 @@
     props: {
       message: String,
       endDate: Date,
-      live: Boolean,
+      live: Boolean
     },
     mounted: function () {
       if (this.live) {
