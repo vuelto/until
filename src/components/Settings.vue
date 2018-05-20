@@ -1,7 +1,7 @@
 <template with html>
     <div id="settings">
         <div class="row">
-            <div id="insert">
+            <div class="insert">
                 <input type="button" value="{milliseconds}" v-on:click="insert" />
                 <input type="button" value="{seconds}" v-on:click="insert" />
                 <input type="button" value="{minutes}" v-on:click="insert" />
@@ -11,12 +11,10 @@
                 <input type="button" value="{months}" v-on:click="insert" />
                 <input type="button" value="{years}" v-on:click="insert" />
             </div>
-
-            <div id="message">
-                <textarea rows="10" cols="20" id="msg" v-model="rawMessage"></textarea>
-            </div>
+            <textarea rows="10" cols="20" id="msg" v-model="d_message"></textarea>
         </div>
         <div id="buttons" class="row">
+            <datepicker v-on:selected="dateSelected" v-bind:value="d_endDate" />
             <input type="button" v-on:click="save()" id="save" value="save" />
             <input type="button" v-on:click="cancel()" id="cancel" value="cancel" />
         </div>
@@ -24,29 +22,40 @@
 </template>
 
 <script>
+    import datepicker from 'vuejs-datepicker';
+
     export default {
         name: 'settings',
+        components:{
+            datepicker
+        },
         props: {
-            message: String
+            message: String, 
+            endDate: Date
         },
         methods: {
             cancel: function () {
                 this.$emit('cancel');
             },
             save: function () {
-                this.$emit('save', this.rawMessage);
+                this.$emit('save', {message:this.d_message, endDate: this.d_endDate});
             },
             insert: function (evt) {
-                this.rawMessage += evt.currentTarget.value;
+                this.d_message += evt.currentTarget.value;
+            }, 
+            dateSelected: function(date){
+                this.d_endDate = date;
             }
         },
         data : function() {
             return {
-                rawMessage: ''
+                d_message: '', 
+                d_endDate: new Date()
             };
         },
         mounted: function() {
-            this.rawMessage = this.message;
+            this.d_message = this.message;
+            this.d_endDate = this.endDate;
         }
     }
 </script>
@@ -57,7 +66,7 @@
         width: auto;
     }
     
-    div#insert input{
+    div.insert input{
         display:block;
         min-width : 100px;
     }

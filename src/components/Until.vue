@@ -11,52 +11,51 @@ export default {
   name: 'until',
   props: {
     message: String, 
-    end: Date
+    endDate: Date
   }, 
   methods: {
+    diff: function() {
+      return moment.duration(
+        moment(this.endDate).diff(new Date())
+      );
+    },
     milliseconds: function() {
-      return 1;
+      return this.diff().asMilliseconds();
     }, 
     seconds: function() {
-      return 1;
+      return Math.round(this.diff().asSeconds());
     }, 
     minutes: function() {
-      return 1;
+      return Math.round(this.diff().asMinutes());
     },
     hours: function() {
-      return 1;
+      return Math.round(this.diff().asHours());
     },
     days: function(){
-      return (365 - moment().dayOfYear())
+      return Math.round(this.diff().asDays());
     }, 
     weeks: function() {
-      return 2;
+      return Math.round(this.diff().asWeeks());
     }, 
     months: function() {
-      return 3;
+      return Math.round(this.diff().asMonths());
     }, 
     years: function(){
-      return 4;
+      return Math.round(this.diff().asYears());
     }
   },
   computed: {
     cookedMessage: function() {
       return this.message
-        .replace('{milliseconds}', this.milliseconds())
-        .replace('{seconds}', this.seconds())
-        .replace('{minutes}', this.minutes())
-        .replace('{hours}', this.hours())
-        .replace('{days}', this.days())
-        .replace('{weeks}', this.weeks())
-        .replace('{months}', this.months())
-        .replace('{years}', this.years());
+        .replace(/{milliseconds}/g, this.milliseconds())
+        .replace(/{seconds}/g, this.seconds())
+        .replace(/{minutes}/g, this.minutes())
+        .replace(/{hours}/g, this.hours())
+        .replace(/{days}/g, this.days())
+        .replace(/{weeks}/g, this.weeks())
+        .replace(/{months}/g, this.months())
+        .replace(/{years}/g, this.years());
     }
   }
 }
 </script>
-
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-</style>

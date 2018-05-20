@@ -2,10 +2,10 @@
   <div id="app">
     <div v-if="!showSettings">
       <input type="button" id="settings" value="settings" v-on:click="show()">
-      <until v-bind:message="message"/>
+      <until v-bind:message="message" v-bind:endDate="endDate"/>
     </div>
     <div v-if="showSettings">
-      <settings v-bind:message="message" v-on:save="save" v-on:cancel="cancel" />
+      <settings v-bind:message="message" v-bind:endDate="endDate" v-on:save="save" v-on:cancel="cancel" />
     </div>
   </div>
 </template>
@@ -23,21 +23,25 @@ export default {
   data: function() {
     return {
       showSettings: false, 
-      message: ''
+      message: '', 
+      endDate: null
     }
   },
   mounted: function(){
+    this.endDate = new Date(this.$ls.get('endDate'));
     this.message = this.$ls.get('message') ||
-      'days until the year is gone forever!';
+      '{days} days until right now!';
   },
   methods: {
     show: function() {
       this.showSettings = true;
     }, 
-    save: function(msg) {
-      this.$ls.set('message', msg);
-      this.message = msg;
-      this.cancel();
+    save: function(upd) {
+      this.$ls.set('message', upd.message);
+      this.$ls.set('endDate', upd.endDate)
+      this.message = upd.message;
+      this.endDate = new Date(upd.endDate);
+      this.showSettings = false;
     }, 
     cancel: function() {
       this.showSettings = false;
