@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+// process is undef below
 
 import { register } from 'register-service-worker';
 
