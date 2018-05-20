@@ -14,6 +14,7 @@
       endDate: Date,
       live: Boolean
     },
+
     mounted: function () {
       if (this.live) {
         this.interval = setInterval(() =>
