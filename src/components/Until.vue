@@ -5,57 +5,75 @@
 </template>
 
 <script>
-import moment from 'moment';
+  import moment from 'moment';
 
-export default {
-  name: 'until',
-  props: {
-    message: String, 
-    endDate: Date
-  }, 
-  methods: {
-    diff: function() {
-      return moment.duration(
-        moment(this.endDate).diff(new Date())
-      );
+  export default {
+    name: 'until',
+    props: {
+      message: String,
+      endDate: Date,
+      live: Boolean
     },
-    milliseconds: function() {
-      return this.diff().asMilliseconds();
-    }, 
-    seconds: function() {
-      return Math.round(this.diff().asSeconds());
-    }, 
-    minutes: function() {
-      return Math.round(this.diff().asMinutes());
+    mounted: function () {
+      if (this.live) {
+        this.interval = setInterval(() =>
+        {
+          this.now = new Date();
+        },60000);
+      }
     },
-    hours: function() {
-      return Math.round(this.diff().asHours());
+    destroyed: function() {
+      clearInterval(this.interval);
     },
-    days: function(){
-      return Math.round(this.diff().asDays());
-    }, 
-    weeks: function() {
-      return Math.round(this.diff().asWeeks());
-    }, 
-    months: function() {
-      return Math.round(this.diff().asMonths());
-    }, 
-    years: function(){
-      return Math.round(this.diff().asYears());
-    }
-  },
-  computed: {
-    cookedMessage: function() {
-      return this.message
-        .replace(/{milliseconds}/g, this.milliseconds())
-        .replace(/{seconds}/g, this.seconds())
-        .replace(/{minutes}/g, this.minutes())
-        .replace(/{hours}/g, this.hours())
-        .replace(/{days}/g, this.days())
-        .replace(/{weeks}/g, this.weeks())
-        .replace(/{months}/g, this.months())
-        .replace(/{years}/g, this.years());
+    methods: {
+      diff: function (time) {
+        return moment.duration(
+          moment(this.endDate).diff(time)
+        );
+      },
+      milliseconds: function (time) {
+        return this.diff(time).asMilliseconds();
+      },
+      seconds: function (time) {
+        return Math.round(this.diff(time).asSeconds());
+      },
+      minutes: function (time) {
+        return Math.round(this.diff(time).asMinutes());
+      },
+      hours: function (time) {
+        return Math.round(this.diff(time).asHours());
+      },
+      days: function (time) {
+        return Math.round(this.diff(time).asDays());
+      },
+      weeks: function (time) {
+        return Math.round(this.diff(time).asWeeks());
+      },
+      months: function (time) {
+        return Math.round(this.diff(time).asMonths());
+      },
+      years: function (time) {
+        return Math.round(this.diff(time).asYears());
+      }
+    },
+    data: function() {
+      return {
+        now: new Date(), 
+        interval: null
+      }
+    },
+    computed: {
+      cookedMessage: function () {
+        return this.message
+          .replace(/{milliseconds}/g, this.milliseconds(this.now))
+          .replace(/{seconds}/g, this.seconds(this.now))
+          .replace(/{minutes}/g, this.minutes(this.now))
+          .replace(/{hours}/g, this.hours(this.now))
+          .replace(/{days}/g, this.days(this.now))
+          .replace(/{weeks}/g, this.weeks(this.now))
+          .replace(/{months}/g, this.months(this.now))
+          .replace(/{years}/g, this.years(this.now));
+      }
     }
   }
-}
 </script>

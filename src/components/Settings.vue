@@ -13,8 +13,16 @@
             </div>
             <textarea rows="10" cols="20" id="msg" v-model="d_message"></textarea>
         </div>
-        <div id="buttons" class="row">
+        <div class="row">
             <datepicker v-on:selected="dateSelected" v-bind:value="d_endDate" />
+        </div>
+        <div class="row">
+            <label>
+                <input type="checkbox" v-model="d_live" />
+                Live Updates
+            </label>
+        </div>
+        <div class="row">
             <input type="button" v-on:click="save()" id="save" value="save" />
             <input type="button" v-on:click="cancel()" id="cancel" value="cancel" />
         </div>
@@ -26,36 +34,43 @@
 
     export default {
         name: 'settings',
-        components:{
+        components: {
             datepicker
         },
         props: {
-            message: String, 
-            endDate: Date
+            message: String,
+            endDate: Date,
+            live: Boolean
         },
         methods: {
             cancel: function () {
                 this.$emit('cancel');
             },
             save: function () {
-                this.$emit('save', {message:this.d_message, endDate: this.d_endDate});
+                this.$emit('save', {
+                    message: this.d_message,
+                    endDate: this.d_endDate, 
+                    live: this.d_live
+                });
             },
             insert: function (evt) {
                 this.d_message += evt.currentTarget.value;
-            }, 
-            dateSelected: function(date){
+            },
+            dateSelected: function (date) {
                 this.d_endDate = date;
             }
         },
-        data : function() {
+        data: function () {
             return {
-                d_message: '', 
-                d_endDate: new Date()
+                d_message: '',
+                d_endDate: new Date(), 
+                d_live: true
             };
         },
-        mounted: function() {
+        mounted: function () {
             this.d_message = this.message;
             this.d_endDate = this.endDate;
+            this.d_live = this.live;
         }
     }
 </script>
@@ -65,10 +80,10 @@
         height: auto;
         width: auto;
     }
-    
-    div.insert input{
-        display:block;
-        min-width : 100px;
+
+    div.insert input {
+        display: block;
+        min-width: 100px;
     }
 
     div.row {
