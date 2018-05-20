@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "moment": "^2.22.1",
+    "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-localstorage": "^0.6.2",
     "vuejs-datepicker": "^1.2.2"
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.10",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.10",
+    "@vue/cli-plugin-pwa": "^3.0.0-beta.10",
     "@vue/cli-service": "^3.0.0-beta.10",
     "vue-template-compiler": "^2.5.13"
   },
@@ -31,9 +33,6 @@
       "eslint:recommended"
     ]
   },
-  "jshintConfig": {
-    "esversion": 6
-  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
@@ -43,5 +42,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "jshintConfig": {
+    "esversion": 6
+  }
 }
