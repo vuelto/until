@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-// process is undef below
+// trying to get task #3 to move from to do to in progress
 
 import { register } from 'register-service-worker';
 
