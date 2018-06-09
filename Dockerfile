@@ -1,5 +1,5 @@
-FROM node
-FROM nginx
+FROM nginx:alpine
+RUN apk add nodejs
 RUN mkdir /vuejs
 ADD ./ /vuejs
 RUN cd /vuejs && npm install && npm run build
