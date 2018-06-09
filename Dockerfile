@@ -1,4 +1,5 @@
 FROM node
+FROM nginx
 RUN mkdir /vuejs
 ADD ./ /vuejs
 RUN cd /vuejs && npm install && npm run build
