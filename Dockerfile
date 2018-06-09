@@ -3,6 +3,6 @@ FROM node
 RUN mkdir /vuejs
 ADD ./ /vuejs
 RUN cd /vuejs && npm install && npm run build
-RUN ls -la vuejs
+RUN ls -la /vuejs/dist
 
-COPY ./dist /usr/share/nginx/html
+COPY /vuejs/dist /usr/share/nginx/html
